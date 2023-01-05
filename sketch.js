@@ -29,7 +29,7 @@ async function fetchMovies() {
 
     setInterval(() => {
         window.scrollTo(posX, 0);
-        posX += 2;
+        posX++;
         if (window.scrollX >= 12480) {
         window.scrollTo(0, 0);
         posX = 0;
