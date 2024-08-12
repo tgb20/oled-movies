@@ -19,10 +19,10 @@ async function fetchMovies() {
 let posX = 0;
 let movies = [];
 let posters = [];
-let posterWidth = 480;
-let posterHeight = 720;
+let posterWidth = 720;
+let posterHeight = 1080;
 async function setup() {
-    createCanvas(1280, 720);
+    createCanvas(1920, 1080);
     movies = await fetchMovies();
     for (let i = 0; i < movies.length; i++) {
         let mp = loadImage('https://cors-proxy.tgb20.workers.dev/?' + movies[i].poster);
