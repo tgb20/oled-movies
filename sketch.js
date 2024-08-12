@@ -13,30 +13,50 @@ async function fetchMovies() {
             let date = new Date(movie.watched);
             return -date.getTime();
         }).value();
-    return movies.slice(0, 10).concat(movies.slice(0, 10));
+    return movies.slice(0, 10);
 }
 
 let posX = 0;
+let movies = [];
+let posters = [];
+let posterWidth = 480;
+let posterHeight = 720;
+async function setup() {
+    createCanvas(1280, 720);
+    movies = await fetchMovies();
+    for (let i = 0; i < movies.length; i++) {
+        let mp = loadImage('https://cors-proxy.tgb20.workers.dev/?' + movies[i].poster);
+        let newImage = new ImageContainer(mp, i * posterWidth, 0);
+        posters.push(newImage);
+    }
+}
 
-window.onload = async () => {
-    let movies = await fetchMovies();
-    let body = document.getElementById("body");
-    movies.forEach(movie => {
-        const img = document.createElement("img");
-        img.src = movie.poster;
-        body.appendChild(img);
-    });
+let offset = 0;
+let speed = 3;
 
-    setInterval(() => {
-        window.scrollTo(posX, 0);
-        posX++;
-        if (window.scrollX >= 12480) {
-            window.scrollTo(0, 0);
-            posX = 0;
+function draw() {
+    for (let i = 0; i < posters.length; i++) {
+        posters[i].update();
+        posters[i].draw()
+    }
+    offset += speed;
+}
+
+class ImageContainer {
+    constructor(image, x, y) {
+        this.image = image;
+        this.x = x;
+        this.y = y;
+    }
+
+    draw() {
+        image(this.image, this.x, this.y, posterWidth, posterHeight);
+    }
+
+    update() {
+        this.x -= speed;
+        if (this.x < -posterWidth) {
+            this.x = (posters.length - 1) * posterWidth;
         }
-    }, 10);
-
-    setInterval(() => {
-        window.location.reload();
-    }, 21600000)
+    }
 }
