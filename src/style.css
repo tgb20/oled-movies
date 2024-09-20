@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.p-carousel-indicator-list, .p-carousel-next-button, .p-carousel-prev-button {
+  display: none !important;
+}
