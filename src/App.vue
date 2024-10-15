@@ -31,6 +31,10 @@ fetch("https://flowers.tgb.gg/movies")
   .catch((err) => {
     console.error(err);
   });
+
+setInterval(() => {
+  location.reload();
+}, 60 * 60 * 1000);
 </script>
 
 <template>
