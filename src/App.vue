@@ -3,26 +3,26 @@ import Carousel from "primevue/carousel";
 import { ref } from "vue";
 
 interface Movie {
-  genres: string;
-  id: string;
-  poster: string;
-  rated: string;
-  rating: number;
+  imdb_id: string;
   title: string;
-  votes: string;
+  release_date: string;
+  rated: string;
+  genres: string[];
+  votes: number;
+  rating: number;
+  poster: string;
   watched: string;
-  year: number;
 }
 
 const movies = ref<Movie[]>([]);
 
-fetch("https://flowers.tgb.gg/movies")
+fetch("https://letterboxd-api.tgb.gg/api/tgb20")
   .then((response) => {
     return response.json();
   })
   .then((data: Movie[]) => {
     console.log(data);
-    movies.value = data
+    movies.value = data.movies
       .sort((a, b) => {
         return Date.parse(b.watched) - Date.parse(a.watched);
       })
